@@ -1,0 +1,63 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/editar_foto_perfil"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/foto_perfil"
+            android:src="@drawable/baseline_person_24" />
+
+        <EditText
+            android:id="@+id/editar_nombre_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nombre" />
+
+        <EditText
+            android:id="@+id/editar_apellidos_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/apellidos" />
+
+
+        <EditText
+            android:id="@+id/editar_telefono_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/telefono"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/editar_descripcion_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/descripcion"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/guardar_perfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/guardar"
+            android:onClick="onClickGuardarPerfil"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/volver_atras"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/volver"
+            android:onClick="onClickVolverPerfil"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</ScrollView>

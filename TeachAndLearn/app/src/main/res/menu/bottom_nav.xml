@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/bottom_area_personal"
+        android:title="@string/area_personal"
+        android:icon="@drawable/baseline_home_24"/>
+    <item android:id="@+id/bottom_anuncios_alumnos"
+        android:title="@string/anuncios_alumnos"
+        android:icon="@drawable/baseline_assignment_24"/>
+    <item android:id="@+id/bottom_anuncios_profesores"
+        android:title="@string/anuncios_profesores"
+        android:icon="@drawable/baseline_assessment_24"/>
+</menu>

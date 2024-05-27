@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">TeachAndLearn</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="contrasenia">Contraseña</string>
+    <string name="registro">Registro</string>
+    <string name="clic_para_iniciar_sesion">Clic para iniciar sesion</string>
+    <string name="clic_para_registrarse">Clic para registrarse</string>
+    <string name="cerrar_sesion">Cerrar Sesion</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="detalles">DETALLES</string>
+    <string name="anuncios_profesores">Anuncios Profesores</string>
+    <string name="anuncios_alumnos">Anuncios Alumnos</string>
+    <string name="area_personal">Area Personal</string>
+    <string name="foto_perfil">Foto de perfil</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="telefono">Teléfono</string>
+    <string name="descripcion">Descripción</string>
+    <string name="guardar">Guardar</string>
+    <string name="volver">Volver</string>
+    <string name="editar_perfil">Editar Perfil</string>
+    <string name="confirmar_contrasenia">Confirmar contraseña</string>
+    <string name="clic_para_iniciar_sesion_si_ya_tienes_cuenta">Clic para iniciar sesion si ya tienes cuenta</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="iniciar_sesion">Iniciar Sesion</string>
+    <string name="no_tienes_cuenta">¿No tienes cuenta?</string>
+    <string-array name="filter_options">
+        <item>HorasAsc</item>
+        <item>HorasDesc</item>
+        <item>PrecioAsc</item>
+        <item>PrecioDesc</item>
+    </string-array>
+</resources>
