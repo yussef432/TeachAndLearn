@@ -35,16 +35,13 @@ public class Area_Personal extends Fragment {
                     tab.setText("Perfil");
                     break;
                 case 1:
-                    tab.setText("Clases");
+                    tab.setText("Reservas");
                     break;
                 case 2:
                     tab.setText("Calendario");
                     break;
                 case 3:
                     tab.setText("Mis Anuncios");
-                    break;
-                case 4:
-                    tab.setText("Mis Anuncios Reservados");
                     break;
             }
         }).attach();

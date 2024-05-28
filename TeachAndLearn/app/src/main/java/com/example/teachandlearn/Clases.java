@@ -60,6 +60,8 @@ public class Clases extends Fragment {
                     return new ClasesPendientesFragment();
                 case 1:
                     return new ClasesReservadasFragment();
+                case 2:
+                    return new ClasesRechazadasFragment();
                 default:
                     return null;
             }
@@ -67,7 +69,7 @@ public class Clases extends Fragment {
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Nullable
@@ -78,6 +80,8 @@ public class Clases extends Fragment {
                     return "Pendientes";
                 case 1:
                     return "Reservados";
+                case 2:
+                    return "Rechazados";
                 default:
                     return null;
             }

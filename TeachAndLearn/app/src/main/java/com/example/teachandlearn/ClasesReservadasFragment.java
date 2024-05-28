@@ -43,10 +43,11 @@ public class ClasesReservadasFragment extends Fragment {
     private void loadClasesReservadas() {
         new Thread(() -> {
             String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-            List<Anuncio> anuncios = db.anuncioDao().findAnunciosReservadosByUserEmail(userEmail);
+            List<Anuncio> anunciosReservados = db.anuncioDao().findAnunciosReservadosByUserEmail(userEmail);
+            List<Reserva> reservasReservadas = db.reservaDao().findReservadosByUserEmail(userEmail);
             getActivity().runOnUiThread(() -> {
-                if (anuncios != null && !anuncios.isEmpty()) {
-                    adapter = new ClasesAdapter(getContext(), anuncios);
+                if (anunciosReservados != null && !anunciosReservados.isEmpty()) {
+                    adapter = new ClasesAdapter(getContext(), anunciosReservados, reservasReservadas);
                     listViewClases.setAdapter(adapter);
                 } else {
                     Toast.makeText(getContext(), "No se encontraron clases reservadas", Toast.LENGTH_SHORT).show();

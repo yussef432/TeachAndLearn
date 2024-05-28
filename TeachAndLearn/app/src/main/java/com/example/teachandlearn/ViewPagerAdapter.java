@@ -17,14 +17,13 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 0: return new Perfil();
             case 1: return new Clases();
             case 2: return new Calendario();
-            case 3: return new Mis_Anuncios();
-            case 4: return new Mis_Anuncios_Reservados();
+            case 3: return new Mis_Anuncios_Reservados();
             default: return new Perfil();
         }
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 4;
     }
 }

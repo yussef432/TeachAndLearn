@@ -126,10 +126,13 @@ public class Ver_Anuncio extends AppCompatActivity {
 
                     aceptarReserva.setOnClickListener(v -> {
                         new Thread(() -> {
-                            db.reservaDao().updateReservaEstado(reserva.id, "Accepted");
+                            AnuncioDao anuncioDao = db.anuncioDao();
+                            db.reservaDao().updateReservado(reserva.id, "Reservado", reserva.idUsuario);
+                            db.reservaDao().updateRechazado(anuncio.id, "Rechazado", reserva.idUsuario);
+                            anuncio.setEstado("Aceptado");
+                            anuncioDao.update(anuncio);
                             runOnUiThread(() -> {
                                 Toast.makeText(this, "Reserva aceptada", Toast.LENGTH_SHORT).show();
-                                loadReservas(); // Reload reservas after accepting
                             });
                         }).start();
                     });

@@ -57,6 +57,8 @@ public class Mis_Anuncios_Reservados extends Fragment {
                     return new AnunciosPendientesFragment();
                 case 1:
                     return new AnunciosAceptadosFragment();
+                case 2:
+                    return new Mis_Anuncios();
                 default:
                     return null;
             }
@@ -64,7 +66,7 @@ public class Mis_Anuncios_Reservados extends Fragment {
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Nullable
@@ -75,6 +77,8 @@ public class Mis_Anuncios_Reservados extends Fragment {
                     return "Pendientes de Aceptar";
                 case 1:
                     return "Aceptados";
+                case 2:
+                    return "Sin reservas";
                 default:
                     return null;
             }

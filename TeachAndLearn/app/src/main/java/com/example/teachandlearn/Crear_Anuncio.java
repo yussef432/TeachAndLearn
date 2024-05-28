@@ -126,7 +126,7 @@ public class Crear_Anuncio extends AppCompatActivity {
             Date fechaCreacionDate = new Date();
 
             if (fechaTutoriaDate.before(fechaCreacionDate)) {
-                Toast.makeText(this, "La fecha de tutoría no puede ser anterior a la fecha de creación.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "La fecha de tutoría no puede ser anterior o igual a la fecha de creación.", Toast.LENGTH_SHORT).show();
                 return;
             }
 

@@ -13,11 +13,17 @@ public interface ReservaDao {
     @Insert
     void insert(Reserva reserva);
 
+
+
     @Query("SELECT * FROM reserva WHERE id_anuncio = :anuncioId")
     List<Reserva> findByAnuncioId(int anuncioId);
 
     @Query("UPDATE reserva SET estado = :estado WHERE id = :reservaId")
     void updateReservaEstado(int reservaId, String estado);
+    @Query("UPDATE reserva SET estado = :estado WHERE id = :reservaId AND id_usuario = :userEmail")
+    void updateReservado(int reservaId, String estado, String userEmail);
+    @Query("UPDATE reserva SET estado = :estado WHERE id_anuncio = :anuncioid AND id_usuario != :userEmail")
+    void updateRechazado(int anuncioid, String estado, String userEmail);
 
     @Query("SELECT EXISTS(SELECT 1 FROM reserva WHERE id_anuncio = :anuncioId AND id_usuario = :userEmail)")
     boolean isAnuncioReservedByUser(int anuncioId, String userEmail);
@@ -32,7 +38,7 @@ public interface ReservaDao {
             reserva.setIdUsuario(userEmail);
             reserva.setRolUsuario(tipoAnuncio);
             reserva.setFechaReserva(new Date().toString());
-            reserva.setEstado("Pending");
+            reserva.setEstado("Pendiente");
             insert(reserva);
 
             Anuncio anuncio = anuncioDao.findAnuncioById(anuncioId);
@@ -52,6 +58,8 @@ public interface ReservaDao {
     List<ReservaConUsuario> getReservasWithUsuario(int anuncioId);
     @Query("SELECT * FROM reserva WHERE id_usuario = :userEmail AND estado = 'Pendiente'")
     List<Reserva> findPendientesByUserEmail(String userEmail);
+    @Query("SELECT * FROM reserva WHERE id_usuario = :userEmail AND estado = 'Rechazado'")
+    List<Reserva> findReservasRechazadasByUserEmail(String userEmail);
 
     @Query("SELECT * FROM reserva WHERE id_usuario = :userEmail AND estado = 'Reservado'")
     List<Reserva> findReservadosByUserEmail(String userEmail);

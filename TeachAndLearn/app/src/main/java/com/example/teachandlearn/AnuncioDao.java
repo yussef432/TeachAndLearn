@@ -85,9 +85,15 @@ public interface AnuncioDao {
     @Query("SELECT * FROM anuncio WHERE id_usuario = :userEmail AND estado = 'Aceptado'")
     List<Anuncio> findAceptadosByUserEmail(String userEmail);
 
-    @Query("SELECT * FROM anuncio WHERE estado = 'Pendiente' AND id IN (SELECT id_anuncio FROM reserva WHERE id_usuario = :userEmail AND estado = 'Pendiente')")
+    @Query("SELECT * FROM anuncio WHERE estado = 'Pendiente' AND id IN " +
+            "(SELECT id_anuncio FROM reserva WHERE id_usuario = :userEmail AND estado = 'Pendiente')")
     List<Anuncio> findAnunciosPendientesReservadosByUserEmail(String userEmail);
+    @Query("SELECT * FROM anuncio WHERE estado = 'Aceptado' AND id IN " +
+            "(SELECT id_anuncio FROM reserva WHERE id_usuario = :userEmail AND estado = 'Rechazado')")
+    List<Anuncio> findAnunciosRechazadosReservadosByUserEmail(String userEmail);
 
-    @Query("SELECT * FROM anuncio WHERE estado = 'Reservado' AND id IN (SELECT id_anuncio FROM reserva WHERE id_usuario = :userEmail AND estado = 'Reservado')")
+    @Query("SELECT * FROM anuncio WHERE estado = 'Reservado' OR estado = 'Aceptado' AND id IN " +
+            "(SELECT id_anuncio FROM reserva " +
+            "WHERE id_usuario = :userEmail AND estado = 'Reservado')")
     List<Anuncio> findAnunciosReservadosByUserEmail(String userEmail);
 }

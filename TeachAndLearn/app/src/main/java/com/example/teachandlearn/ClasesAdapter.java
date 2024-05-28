@@ -18,8 +18,11 @@ import java.util.Locale;
 
 public class ClasesAdapter extends ArrayAdapter<Anuncio> {
 
-    public ClasesAdapter(Context context, List<Anuncio> clases) {
+    private List<Reserva> reservas; // Agregamos una lista de reservas
+
+    public ClasesAdapter(Context context, List<Anuncio> clases, List<Reserva> reservas) {
         super(context, 0, clases);
+        this.reservas = reservas;
     }
 
     @Override
@@ -35,9 +38,12 @@ public class ClasesAdapter extends ArrayAdapter<Anuncio> {
         TextView estado = view.findViewById(R.id.estado_clase);
 
         titulo.setText(clase.getTitulo());
-        SimpleDateFormat dateFormat = new SimpleDateFormat();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         fecha.setText(dateFormat.format(clase.getFechaTutoria())); // Formatear la fecha aquí
-        estado.setText(clase.getEstado());
+
+        // Buscamos la reserva correspondiente al anuncio actual
+        String estadoReserva = getEstadoReserva(clase.getId());
+        estado.setText(estadoReserva != null ? estadoReserva : "Sin reserva");
 
         view.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), Ver_Anuncio.class);
@@ -46,5 +52,15 @@ public class ClasesAdapter extends ArrayAdapter<Anuncio> {
         });
 
         return view;
+    }
+
+    @Nullable
+    private String getEstadoReserva(int anuncioId) {
+        for (Reserva reserva : reservas) {
+            if (reserva.getIdAnuncio() == anuncioId) {
+                return reserva.getEstado();
+            }
+        }
+        return null; // Si no se encuentra una reserva correspondiente
     }
 }
