@@ -1,6 +1,7 @@
 package com.example.teachandlearn;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,7 +30,11 @@ public class Crear_Anuncio extends AppCompatActivity {
     private Spinner tipoAnuncio;
     private Button guardarAnuncio;
     private AppDatabase db;
-    String estado = "";
+    private boolean isEditMode = false;
+    private Anuncio anuncio;
+    private int selectedHour;
+    private int selectedMinute;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,6 +93,13 @@ public class Crear_Anuncio extends AppCompatActivity {
         });
 
         guardarAnuncio.setOnClickListener(v -> saveAnuncio());
+
+        // Verificar si estamos en modo edición
+        int anuncioId = getIntent().getIntExtra("ANUNCIO_ID", -1);
+        if (anuncioId != -1) {
+            isEditMode = true;
+            loadAnuncio(anuncioId);
+        }
     }
 
     private void showDatePickerDialog() {
@@ -98,8 +110,9 @@ public class Crear_Anuncio extends AppCompatActivity {
                     calendar.set(Calendar.YEAR, year);
                     calendar.set(Calendar.MONTH, month);
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                    fechaTutoria.setText(dateFormat.format(calendar.getTime()));
+
+                    // Abrir el TimePickerDialog después de seleccionar la fecha
+                    showTimePickerDialog(calendar);
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -107,6 +120,27 @@ public class Crear_Anuncio extends AppCompatActivity {
         );
         datePickerDialog.show();
     }
+
+    private void showTimePickerDialog(Calendar calendar) {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                Crear_Anuncio.this,
+                (view, hourOfDay, minute) -> {
+                    selectedHour = hourOfDay;
+                    selectedMinute = minute;
+
+                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                    calendar.set(Calendar.MINUTE, minute);
+
+                    SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+                    fechaTutoria.setText(dateTimeFormat.format(calendar.getTime()));
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true
+        );
+        timePickerDialog.show();
+    }
+
 
     private void saveAnuncio() {
         try {
@@ -119,14 +153,14 @@ public class Crear_Anuncio extends AppCompatActivity {
             String descripcion = descripcionAnuncio.getText().toString();
 
             // Validar fechas
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-            Date fechaTutoriaDate = dateFormat.parse(fechaT);
+            SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+            Date fechaTutoriaDate = dateTimeFormat.parse(fechaT);
 
             // Obtener la fecha de creación (fecha actual)
             Date fechaCreacionDate = new Date();
 
             if (fechaTutoriaDate.before(fechaCreacionDate)) {
-                Toast.makeText(this, "La fecha de tutoría no puede ser anterior o igual a la fecha de creación.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "La fecha y hora de tutoría no pueden ser anteriores o iguales a la fecha de creación.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -138,30 +172,66 @@ public class Crear_Anuncio extends AppCompatActivity {
             }
             String email = currentUser.getEmail();
 
-            // Crear el objeto Anuncio y establecer el ID del usuario
-            Anuncio anuncio = new Anuncio();
-            anuncio.idUsuario = email;
-            anuncio.titulo = titulo;
-            anuncio.fechaCreacion = fechaCreacionDate;
-            anuncio.fechaTutoria = fechaTutoriaDate;
-            anuncio.horas = horas;
-            anuncio.precioPorHora = precio;
-            anuncio.descripcion = descripcion;
-            anuncio.tipoAnuncio = tipo;
-            anuncio.estado = estado;
+            if (isEditMode) {
+                // Si estamos en modo edición, actualizar el anuncio existente
+                anuncio.titulo = titulo;
+                anuncio.fechaTutoria = fechaTutoriaDate;
+                anuncio.horas = horas;
+                anuncio.precioPorHora = precio;
+                anuncio.descripcion = descripcion;
+                anuncio.tipoAnuncio = tipo;
 
-            new Thread(() -> {
-                db.anuncioDao().insert(anuncio);
-                runOnUiThread(() -> {
-                    Toast.makeText(this, "Anuncio guardado", Toast.LENGTH_SHORT).show();
-                    finish();
-                });
-            }).start();
+                new Thread(() -> {
+                    db.anuncioDao().update(anuncio);
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "Anuncio actualizado", Toast.LENGTH_SHORT).show();
+                        finish();
+                    });
+                }).start();
+            } else {
+                // Crear el objeto Anuncio y establecer el ID del usuario
+                Anuncio nuevoAnuncio = new Anuncio();
+                nuevoAnuncio.idUsuario = email;
+                nuevoAnuncio.titulo = titulo;
+                nuevoAnuncio.fechaCreacion = fechaCreacionDate;
+                nuevoAnuncio.fechaTutoria = fechaTutoriaDate;
+                nuevoAnuncio.horas = horas;
+                nuevoAnuncio.precioPorHora = precio;
+                nuevoAnuncio.descripcion = descripcion;
+                nuevoAnuncio.tipoAnuncio = tipo;
+                nuevoAnuncio.estado = ""; // Estado inicial vacío
+
+                new Thread(() -> {
+                    db.anuncioDao().insert(nuevoAnuncio);
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "Anuncio guardado", Toast.LENGTH_SHORT).show();
+                        finish();
+                    });
+                }).start();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "Error al guardar el anuncio. Debe rellenar todos los campos correctamente. Código del error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
+
+    private void loadAnuncio(int anuncioId) {
+        new Thread(() -> {
+            anuncio = db.anuncioDao().findAnuncioById(anuncioId);
+            runOnUiThread(() -> {
+                if (anuncio != null) {
+                    tituloAnuncio.setText(anuncio.titulo);
+                    fechaTutoria.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(anuncio.fechaTutoria));
+                    horasAnuncio.setText(String.format("%d h", anuncio.horas));
+                    precioPorHora.setText(String.format("%.2f €", anuncio.precioPorHora));
+                    descripcionAnuncio.setText(anuncio.descripcion);
+                    int spinnerPosition = ((ArrayAdapter<CharSequence>) tipoAnuncio.getAdapter()).getPosition(anuncio.tipoAnuncio);
+                    tipoAnuncio.setSelection(spinnerPosition);
+                }
+            });
+        }).start();
+    }
+
 
     public void onClickVolver(View view) {
         finish();

@@ -71,6 +71,8 @@ public interface AnuncioDao {
     List<Anuncio> findAnunciosReservadosByUsuario(String userEmail);
     @Query("SELECT EXISTS(SELECT 1 FROM reserva WHERE id_anuncio = :anuncioId AND id_usuario = :userEmail)")
     boolean isAnuncioReservedByUser(int anuncioId, String userEmail);
+    @Query("SELECT EXISTS(SELECT 1 FROM anuncio WHERE id = :anuncioId AND estado = 'Aceptado')")
+    boolean anuncioAceptado(int anuncioId);
     @Query("SELECT * FROM anuncio WHERE id_usuario = :userEmail AND estado = :estado")
     List<Anuncio> findByUserEmailAndEstado(String userEmail, String estado);
 

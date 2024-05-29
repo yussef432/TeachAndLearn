@@ -5,6 +5,11 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 @Entity(tableName = "reserva",
         foreignKeys = {
                 @ForeignKey(entity = Anuncio.class,
@@ -82,4 +87,14 @@ public class Reserva {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+    public Date getFechaTutoria() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        try {
+            return format.parse(fechaReserva);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

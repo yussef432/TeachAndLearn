@@ -59,6 +59,7 @@ public class Ver_Anuncio extends AppCompatActivity {
             if (anuncio != null) {
                 String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                 boolean isReservedByUser = db.anuncioDao().isAnuncioReservedByUser(anuncioId, userEmail);
+                boolean anuncioAceptado = db.anuncioDao().anuncioAceptado(anuncioId);
 
                 runOnUiThread(() -> {
                     titulo.setText(anuncio.getTitulo());
@@ -80,6 +81,7 @@ public class Ver_Anuncio extends AppCompatActivity {
                             setupReservarButton();
                         }
                     }
+
                 });
             }
         }).start();
@@ -88,9 +90,13 @@ public class Ver_Anuncio extends AppCompatActivity {
     private void loadReservas() {
         new Thread(() -> {
             List<ReservaConUsuario> reservas = db.reservaDao().getReservasWithUsuario(anuncioId);
+            boolean anuncioAceptado = db.anuncioDao().anuncioAceptado(anuncioId);
             runOnUiThread(() -> {
                 reservasLayout.setVisibility(View.VISIBLE);
                 for (ReservaConUsuario reserva : reservas) {
+                    if (anuncioAceptado && !"Reservado".equals(reserva.estado)) {
+                        continue;
+                    }
                     View reservaView = LayoutInflater.from(this).inflate(R.layout.item_reserva, reservasLayout, false);
                     TextView nombreReserva = reservaView.findViewById(R.id.nombre_reserva);
                     TextView emailReserva = reservaView.findViewById(R.id.email_reserva);
@@ -124,24 +130,29 @@ public class Ver_Anuncio extends AppCompatActivity {
                         }
                     });
 
-                    aceptarReserva.setOnClickListener(v -> {
-                        new Thread(() -> {
-                            AnuncioDao anuncioDao = db.anuncioDao();
-                            db.reservaDao().updateReservado(reserva.id, "Reservado", reserva.idUsuario);
-                            db.reservaDao().updateRechazado(anuncio.id, "Rechazado", reserva.idUsuario);
-                            anuncio.setEstado("Aceptado");
-                            anuncioDao.update(anuncio);
-                            runOnUiThread(() -> {
-                                Toast.makeText(this, "Reserva aceptada", Toast.LENGTH_SHORT).show();
-                            });
-                        }).start();
-                    });
+                    if (anuncioAceptado && "Reservado".equals(reserva.estado)) {
+                        aceptarReserva.setVisibility(View.GONE);
+                    } else {
+                        aceptarReserva.setOnClickListener(v -> {
+                            new Thread(() -> {
+                                AnuncioDao anuncioDao = db.anuncioDao();
+                                db.reservaDao().updateReservado(reserva.id, "Reservado", reserva.idUsuario);
+                                db.reservaDao().updateRechazado(anuncio.id, "Rechazado", reserva.idUsuario);
+                                anuncio.setEstado("Aceptado");
+                                anuncioDao.update(anuncio);
+                                runOnUiThread(() -> {
+                                    Toast.makeText(this, "Reserva aceptada", Toast.LENGTH_SHORT).show();
+                                });
+                            }).start();
+                        });
+                    }
 
                     reservasLayout.addView(reservaView);
                 }
             });
         }).start();
     }
+
 
     private void setupReservarButton() {
         btnReservar.setOnClickListener(v -> reservarAnuncio());
