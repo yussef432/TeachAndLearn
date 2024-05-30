@@ -68,5 +68,10 @@ public interface ReservaDao {
     @Query("SELECT * FROM reserva WHERE id_usuario = :userEmail AND estado = 'Reservado'")
     List<Reserva> findReservadosByUserEmail(String userEmail);
 
+    @Query("SELECT * FROM reserva WHERE strftime('%d/%m/%Y', fecha_reserva) = :dateString")
+    List<Reserva> findReservasByDate(String dateString);
+
+    @Query("SELECT * FROM reserva")
+    List<Reserva> getAll();
 
 }

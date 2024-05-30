@@ -42,7 +42,7 @@ public interface AnuncioDao {
             "CASE WHEN :filter = 'PrecioAsc' THEN precio_por_hora END ASC, " +
             "CASE WHEN :filter = 'PrecioDesc' THEN precio_por_hora END DESC")
     List<Anuncio> searchAnuncios(String tipo, String userEmail, String query, String filter);
-    @Query("SELECT * FROM anuncio WHERE id_usuario = :userEmail AND estado = 'Accepted'")
+    @Query("SELECT * FROM anuncio WHERE id_usuario = :userEmail AND estado = 'Aceptado'")
     List<Anuncio> findAcceptedByUserEmail(String userEmail);
 
     @Query("SELECT * FROM anuncio WHERE tipo_anuncio = :tipo AND id_usuario != :userEmail ORDER BY " +
@@ -98,4 +98,8 @@ public interface AnuncioDao {
             "(SELECT id_anuncio FROM reserva " +
             "WHERE id_usuario = :userEmail AND estado = 'Reservado')")
     List<Anuncio> findAnunciosReservadosByUserEmail(String userEmail);
+    @Query("SELECT * FROM anuncio WHERE strftime('%d/%m/%Y', fecha_tutoria) = :dateString")
+    List<Anuncio> findAnunciosByDate(String dateString);
+    @Query("SELECT * FROM anuncio")
+    List<Anuncio> getAll();
 }
