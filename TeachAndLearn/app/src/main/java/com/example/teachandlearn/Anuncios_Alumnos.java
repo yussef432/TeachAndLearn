@@ -16,6 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Date;
 import java.util.List;
 
 public class Anuncios_Alumnos extends Fragment {
@@ -89,11 +91,12 @@ public class Anuncios_Alumnos extends Fragment {
         new Thread(() -> {
             String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             List<Anuncio> anuncios;
+            long today = new Date().getTime();
             if (TextUtils.isEmpty(query)) {
-                anuncios = db.anuncioDao().findAnunciosByTypeAndNotUser("Alumno", userEmail, filter);
+                anuncios = db.anuncioDao().findAnunciosByTypeAndNotUser("Alumno", userEmail, filter, today);
 
             } else {
-                anuncios = db.anuncioDao().searchAnuncios("Alumno", userEmail, "%" + query + "%", filter);
+                anuncios = db.anuncioDao().searchAnuncios("Alumno", userEmail, "%" + query + "%", filter, today);
             }
             getActivity().runOnUiThread(() -> {
                 if (anuncios != null && !anuncios.isEmpty()) {

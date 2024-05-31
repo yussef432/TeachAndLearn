@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,7 +45,8 @@ public class ClasesRechazadasFragment extends Fragment {
     private void loadClasesRechazadas() {
         new Thread(() -> {
             String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-            List<Anuncio> anunciosRechazados = db.anuncioDao().findAnunciosRechazadosReservadosByUserEmail(userEmail);
+            long today = new Date().getTime();
+            List<Anuncio> anunciosRechazados = db.anuncioDao().findAnunciosRechazadosReservadosByUserEmail(userEmail, today);
             List<Reserva> reservasRechazadas = db.reservaDao().findReservasRechazadasByUserEmail(userEmail);
             getActivity().runOnUiThread(() -> {
                 if (anunciosRechazados != null && !anunciosRechazados.isEmpty()) {

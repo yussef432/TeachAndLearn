@@ -28,20 +28,24 @@ public interface AnuncioDao {
     List<Anuncio> findAnunciosByTypeAndNotUser(String tipo, String userEmail);
 
 
-    @Query("SELECT * FROM anuncio WHERE tipo_anuncio = :tipo AND id_usuario != :userEmail AND id NOT IN (SELECT id_anuncio FROM reserva WHERE id_usuario = :userEmail) ORDER BY " +
+    @Query("SELECT * FROM anuncio WHERE tipo_anuncio = :tipo AND id_usuario != :userEmail " +
+            "AND fecha_tutoria >= :today " +
+            "AND id NOT IN (SELECT id_anuncio FROM reserva WHERE id_usuario = :userEmail) ORDER BY " +
             "CASE WHEN :filter = 'HorasAsc' THEN horas END ASC, " +
             "CASE WHEN :filter = 'HorasDesc' THEN horas END DESC, " +
             "CASE WHEN :filter = 'PrecioAsc' THEN precio_por_hora END ASC, " +
             "CASE WHEN :filter = 'PrecioDesc' THEN precio_por_hora END DESC")
-    List<Anuncio> findAnunciosByTypeAndNotUser(String tipo, String userEmail, String filter);
+    List<Anuncio> findAnunciosByTypeAndNotUser(String tipo, String userEmail, String filter, long today);
 
-    @Query("SELECT * FROM anuncio WHERE tipo_anuncio = :tipo AND id_usuario != :userEmail AND " +
+    @Query("SELECT * FROM anuncio WHERE tipo_anuncio = :tipo AND id_usuario != :userEmail " +
+            "AND fecha_tutoria >= :today AND id NOT IN (SELECT id_anuncio FROM reserva " +
+            "WHERE id_usuario = :userEmail) AND " +
             "(titulo LIKE :query OR descripcion LIKE :query) ORDER BY " +
             "CASE WHEN :filter = 'HorasAsc' THEN horas END ASC, " +
             "CASE WHEN :filter = 'HorasDesc' THEN horas END DESC, " +
             "CASE WHEN :filter = 'PrecioAsc' THEN precio_por_hora END ASC, " +
             "CASE WHEN :filter = 'PrecioDesc' THEN precio_por_hora END DESC")
-    List<Anuncio> searchAnuncios(String tipo, String userEmail, String query, String filter);
+    List<Anuncio> searchAnuncios(String tipo, String userEmail, String query, String filter, long today);
     @Query("SELECT * FROM anuncio WHERE id_usuario = :userEmail AND estado = 'Aceptado'")
     List<Anuncio> findAcceptedByUserEmail(String userEmail);
 
@@ -91,8 +95,8 @@ public interface AnuncioDao {
             "(SELECT id_anuncio FROM reserva WHERE id_usuario = :userEmail AND estado = 'Pendiente')")
     List<Anuncio> findAnunciosPendientesReservadosByUserEmail(String userEmail);
     @Query("SELECT * FROM anuncio WHERE estado = 'Aceptado' AND id IN " +
-            "(SELECT id_anuncio FROM reserva WHERE id_usuario = :userEmail AND estado = 'Rechazado')")
-    List<Anuncio> findAnunciosRechazadosReservadosByUserEmail(String userEmail);
+            "(SELECT id_anuncio FROM reserva WHERE id_usuario = :userEmail AND estado = 'Rechazado')  AND fecha_tutoria >= :today ")
+    List<Anuncio> findAnunciosRechazadosReservadosByUserEmail(String userEmail, long today);
 
     @Query("SELECT * FROM anuncio WHERE estado = 'Reservado' OR estado = 'Aceptado' AND id IN " +
             "(SELECT id_anuncio FROM reserva " +
