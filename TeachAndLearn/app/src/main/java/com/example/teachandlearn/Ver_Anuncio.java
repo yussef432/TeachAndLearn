@@ -1,6 +1,5 @@
 package com.example.teachandlearn;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +14,14 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class Ver_Anuncio extends AppCompatActivity {
 
     private TextView titulo, descripcion, horas, precio, fechaTutoria, fechaCreacion, tipoAnuncio;
-    private Button btnReservar;
+    private Button btnReservar, btnVerPerfilAnunciante;
     private LinearLayout reservasLayout;
     private AppDatabase db;
     private int anuncioId;
@@ -40,6 +41,7 @@ public class Ver_Anuncio extends AppCompatActivity {
         tipoAnuncio = findViewById(R.id.ver_tipo_anuncio);
         btnReservar = findViewById(R.id.btn_reservar_anuncio);
         reservasLayout = findViewById(R.id.reservas_layout);
+        btnVerPerfilAnunciante = findViewById(R.id.btn_ver_perfil_anunciante);
 
         db = AppDatabase.getInstance(this);
 
@@ -51,6 +53,8 @@ public class Ver_Anuncio extends AppCompatActivity {
             Toast.makeText(this, "Error al cargar el anuncio", Toast.LENGTH_SHORT).show();
             finish();
         }
+
+        btnVerPerfilAnunciante.setOnClickListener(v -> togglePerfilAnuncianteCard());
     }
 
     private void loadAnuncio() {
@@ -62,16 +66,20 @@ public class Ver_Anuncio extends AppCompatActivity {
                 boolean anuncioAceptado = db.anuncioDao().anuncioAceptado(anuncioId);
 
                 runOnUiThread(() -> {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE dd 'de' MMMM 'a las' HH:mm 'de' yyyy", new Locale("es", "ES"));
+                    String fechaTutoriaFormatted = dateFormat.format(anuncio.getFechaTutoria());
+                    String fechaCreacionFormatted = dateFormat.format(anuncio.getFechaCreacion());
                     titulo.setText(anuncio.getTitulo());
                     descripcion.setText(anuncio.getDescripcion());
                     horas.setText(String.format("%d h", anuncio.getHoras()));
                     precio.setText(String.format("%.2f €", anuncio.getPrecioPorHora()));
-                    fechaTutoria.setText(anuncio.getFechaTutoria().toString());
-                    fechaCreacion.setText(anuncio.getFechaCreacion().toString());
+                    fechaTutoria.setText(fechaTutoriaFormatted);
+                    fechaCreacion.setText(fechaCreacionFormatted);
                     tipoAnuncio.setText(anuncio.getTipoAnuncio());
 
                     if (userEmail.equals(anuncio.getIdUsuario())) {
                         btnReservar.setVisibility(View.GONE);
+                        btnVerPerfilAnunciante.setVisibility(View.GONE);
                         loadReservas();
                     } else {
                         if (isReservedByUser) {
@@ -153,7 +161,6 @@ public class Ver_Anuncio extends AppCompatActivity {
         }).start();
     }
 
-
     private void setupReservarButton() {
         btnReservar.setOnClickListener(v -> reservarAnuncio());
     }
@@ -179,6 +186,40 @@ public class Ver_Anuncio extends AppCompatActivity {
             });
         }).start();
     }
+    private void togglePerfilAnuncianteCard() {
+        View cardViewAnunciante = findViewById(R.id.cardview_anunciante);
+        if (cardViewAnunciante.getVisibility() == View.VISIBLE) {
+            cardViewAnunciante.setVisibility(View.GONE);
+        } else {
+            cardViewAnunciante.setVisibility(View.VISIBLE);
+            mostrarInformacionAnunciante();
+        }
+    }
+
+//
+
+    private void mostrarInformacionAnunciante() {
+        new Thread(() -> {
+            Usuario anunciante = db.usuarioDao().findByEmail(anuncio.getIdUsuario());
+            if (anunciante != null) {
+                runOnUiThread(() -> {
+                    TextView nombreAnunciante = findViewById(R.id.nombre_anunciante);
+                    TextView apellidosAnunciante = findViewById(R.id.apellidos_anunciante);
+                    TextView emailAnunciante = findViewById(R.id.email_anunciante);
+                    TextView telefonoAnunciante = findViewById(R.id.telefono_anunciante);
+                    TextView descripcionAnunciante = findViewById(R.id.descripcion_anunciante);
+
+                    nombreAnunciante.setText(anunciante.nombre);
+                    apellidosAnunciante.setText(anunciante.apellidos);
+                    emailAnunciante.setText(anunciante.email);
+                    telefonoAnunciante.setText(anunciante.telefono);
+                    descripcionAnunciante.setText(anunciante.descripcion);
+                });
+            }
+        }).start();
+    }
+
+
 
     public void onClickVolver(View view) {
         finish();

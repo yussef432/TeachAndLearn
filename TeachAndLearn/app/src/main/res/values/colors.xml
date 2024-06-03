@@ -6,9 +6,13 @@
     <color name="colorAlumno">#FFCC00</color>
     <color name="colorProfesor">#FF6666</color>
     <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="azulOscuro">#3F51B5</color>
+    <color name="azulClaro">#68EADD</color>
     <color name="textColorPrimary">#000000</color> <!-- Primary text color -->
     <color name="textColorSecondary">#7F8C8D</color> <!-- Secondary text color -->
+    <color name="light_blue">#E3F2FD</color>
+    <color name="primary_blue">#2196F3</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
 
 </resources>

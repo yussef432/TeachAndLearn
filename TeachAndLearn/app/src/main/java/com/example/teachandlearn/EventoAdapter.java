@@ -26,13 +26,14 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
         return new EventoViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull EventoViewHolder holder, int position) {
         Evento evento = eventos.get(position);
         holder.titulo.setText(evento.getTitulo());
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        holder.fechaHora.setText(sdf.format(evento.getFechaHora()));
+        holder.fechaHora.setText(evento.getFechaHoraFormateada());
     }
+
 
 
     @Override

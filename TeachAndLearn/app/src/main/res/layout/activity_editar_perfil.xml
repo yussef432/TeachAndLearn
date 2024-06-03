@@ -1,6 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/light_blue">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,51 +16,86 @@
             android:id="@+id/editar_foto_perfil"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:contentDescription="@string/foto_perfil"
             android:src="@drawable/baseline_person_24" />
 
-        <EditText
-            android:id="@+id/editar_nombre_usuario"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Haz clic en la foto para cambiarla"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/nombre" />
+            android:hint="@string/nombre">
 
-        <EditText
-            android:id="@+id/editar_apellidos_usuario"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editar_nombre_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/apellidos" />
+            android:hint="@string/apellidos">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editar_apellidos_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editar_telefono_usuario"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/telefono"
-            android:inputType="phone" />
+            android:hint="@string/telefono">
 
-        <EditText
-            android:id="@+id/editar_descripcion_usuario"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editar_telefono_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/descripcion"
-            android:inputType="textMultiLine" />
+            android:hint="@string/descripcion">
 
-        <Button
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editar_descripcion_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/guardar_perfil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/guardar"
             android:onClick="onClickGuardarPerfil"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            style="@style/Widget.MaterialComponents.Button"
+            android:backgroundTint="@color/primary_blue"
+            android:textColor="@color/white" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/volver_atras"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/volver"
             android:onClick="onClickVolverPerfil"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/primary_blue"
+            app:strokeWidth="1dp"
+            android:textColor="@color/primary_blue" />
     </LinearLayout>
 </ScrollView>

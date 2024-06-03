@@ -43,12 +43,16 @@
             android:id="@+id/editar_anuncio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Editar" />
+            android:text="Editar"
+            android:backgroundTint="@color/primary_blue"
+            android:textColor="@color/white"/>
 
         <Button
             android:id="@+id/eliminar_anuncio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Eliminar" />
+            android:text="Eliminar"
+            android:backgroundTint="@color/primary_blue"
+            android:textColor="@color/white"/>
     </LinearLayout>
 </LinearLayout>

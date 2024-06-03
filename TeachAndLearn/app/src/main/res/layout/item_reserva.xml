@@ -24,11 +24,15 @@
         android:id="@+id/ver_perfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ver Perfil" />
+        android:text="Ver Perfil"
+        android:backgroundTint="@color/primary_blue"
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/aceptar_reserva"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Aceptar" />
+        android:text="Aceptar"
+        android:backgroundTint="@color/primary_blue"
+        android:textColor="@color/white"/>
 </LinearLayout>

@@ -26,6 +26,8 @@
     <string name="registrarse">Registrarse</string>
     <string name="iniciar_sesion">Iniciar Sesion</string>
     <string name="no_tienes_cuenta">¿No tienes cuenta?</string>
+    <string name="app_icon">icono app</string>
+
     <string-array name="filter_options">
         <item>HorasAsc</item>
         <item>HorasDesc</item>

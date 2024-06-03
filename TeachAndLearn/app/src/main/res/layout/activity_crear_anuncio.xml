@@ -1,70 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/light_blue">
 
-    <EditText
-        android:id="@+id/titulo_anuncio"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Título del Anuncio"
-        android:inputType="text" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <EditText
-        android:id="@+id/fecha_creacion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Fecha de Creación"
-        android:inputType="date"
-        android:visibility="gone" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Título del Anuncio">
 
-    <TextView
-        android:id="@+id/fecha_tutoria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Fecha de la Tutoría"
-        android:inputType="none"
-        android:focusable="false"
-        android:clickable="true" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/titulo_anuncio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Spinner
-        android:id="@+id/tipo_anuncio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:hint="Fecha de Creación">
 
-    <EditText
-        android:id="@+id/horas_anuncio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Horas"
-        android:inputType="number" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fecha_creacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/precio_por_hora"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Precio por Hora"
-        android:inputType="numberDecimal" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha de la Tutoría">
 
-    <EditText
-        android:id="@+id/descripcion_anuncio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Descripción"
-        android:inputType="textMultiLine" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fecha_tutoria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:focusable="false"
+                android:clickable="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/guardar_anuncio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Guardar Anuncio" />
-    <Button
-        android:id="@+id/volver_atras"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:onClick="onClickVolver"
-        android:text="@string/volver" />
-</LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tipo de Anuncio">
+
+            <Spinner
+                android:id="@+id/tipo_anuncio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Horas">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/horas_anuncio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Precio por Hora">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/precio_por_hora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descripción">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descripcion_anuncio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/guardar_anuncio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar Anuncio"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/primary_blue"
+            android:textColor="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/volver_atras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:onClick="onClickVolver"
+            android:text="@string/volver"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/primary_blue"
+            app:strokeWidth="1dp"
+            android:textColor="@color/primary_blue" />
+    </LinearLayout>
+</ScrollView>

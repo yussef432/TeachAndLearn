@@ -5,8 +5,8 @@
         android:icon="@drawable/baseline_home_24"/>
     <item android:id="@+id/bottom_anuncios_alumnos"
         android:title="@string/anuncios_alumnos"
-        android:icon="@drawable/baseline_assignment_24"/>
+        android:icon="@drawable/baseline_school_24"/>
     <item android:id="@+id/bottom_anuncios_profesores"
         android:title="@string/anuncios_profesores"
-        android:icon="@drawable/baseline_assessment_24"/>
+        android:icon="@drawable/twotone_cast_for_education_24"/>
 </menu>
