@@ -21,7 +21,6 @@ public class AnunciosPendientesFragment extends Fragment {
     private ListView listViewAnuncios;
     private AppDatabase db;
     private AnuncioAdapter adapter;
-    private List<Anuncio> anuncios;
 
     @Nullable
     @Override

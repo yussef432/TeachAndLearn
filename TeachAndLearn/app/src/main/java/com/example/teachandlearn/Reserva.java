@@ -56,25 +56,16 @@ public class Reserva {
         this.idAnuncio = idAnuncio;
     }
 
-    public String getIdUsuario() {
-        return idUsuario;
-    }
 
     public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public String getRolUsuario() {
-        return rolUsuario;
-    }
 
     public void setRolUsuario(String rolUsuario) {
         this.rolUsuario = rolUsuario;
     }
 
-    public String getFechaReserva() {
-        return fechaReserva;
-    }
 
     public void setFechaReserva(String fechaReserva) {
         this.fechaReserva = fechaReserva;
@@ -87,14 +78,6 @@ public class Reserva {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    public Date getFechaTutoria() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-        try {
-            return format.parse(fechaReserva);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 
 }

@@ -17,13 +17,6 @@ public interface ReservaDao {
     @Delete
     void delete(Reserva reserva);
 
-
-
-    @Query("SELECT * FROM reserva WHERE id_anuncio = :anuncioId")
-    List<Reserva> findByAnuncioId(int anuncioId);
-
-    @Query("UPDATE reserva SET estado = :estado WHERE id = :reservaId")
-    void updateReservaEstado(int reservaId, String estado);
     @Query("UPDATE reserva SET estado = :estado WHERE id = :reservaId AND id_usuario = :userEmail")
     void updateReservado(int reservaId, String estado, String userEmail);
     @Query("UPDATE reserva SET estado = :estado WHERE id_anuncio = :anuncioid AND id_usuario != :userEmail")
@@ -60,7 +53,7 @@ public interface ReservaDao {
             "FROM reserva JOIN usuario " +
             "ON reserva.id_usuario = usuario.email WHERE reserva.id_anuncio = :anuncioId")
     List<ReservaConUsuario> getReservasWithUsuario(int anuncioId);
-    @Query("SELECT * FROM reserva WHERE id_usuario = :userEmail AND estado = 'Pendiente'")
+    @Query("SELECT * FROM reserva WHERE id_usuario = :userEmail AND estado = 'Pendiente' ")
     List<Reserva> findPendientesByUserEmail(String userEmail);
     @Query("SELECT * FROM reserva WHERE id_usuario = :userEmail AND estado = 'Rechazado'")
     List<Reserva> findReservasRechazadasByUserEmail(String userEmail);
@@ -68,10 +61,7 @@ public interface ReservaDao {
     @Query("SELECT * FROM reserva WHERE id_usuario = :userEmail AND estado = 'Reservado'")
     List<Reserva> findReservadosByUserEmail(String userEmail);
 
-    @Query("SELECT * FROM reserva WHERE strftime('%d/%m/%Y', fecha_reserva) = :dateString")
-    List<Reserva> findReservasByDate(String dateString);
 
-    @Query("SELECT * FROM reserva")
-    List<Reserva> getAll();
-
+    @Query("DELETE FROM reserva WHERE id_anuncio = :anuncioId AND estado != 'Reservado'")
+    void deleteReservasByAnuncioIdIfNotReserved(int anuncioId);
 }

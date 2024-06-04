@@ -16,6 +16,7 @@ materialCalendarview = "2.0.0"
 materialCalendarviewVersion = "1.4.3"
 roomCommon = "2.6.1"
 recyclerview = "1.3.2"
+swiperefreshlayout = "1.1.0"
 
 [libraries]
 compact-calendar-view = { module = "com.github.sundeepk:compact-calendar-view", version.ref = "compactCalendarView" }
@@ -33,6 +34,7 @@ material-calendarview-v143 = { module = "com.prolificinteractive:material-calend
 materialcalendarview = { module = "com.krajcik:materialcalendarview", version.ref = "krajcikMaterialcalendarview" }
 room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

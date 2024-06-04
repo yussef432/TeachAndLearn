@@ -21,7 +21,6 @@ public class AnunciosAceptadosFragment extends Fragment {
     private ListView listViewAnuncios;
     private AppDatabase db;
     private AnuncioAdapter adapter;
-    private List<Anuncio> anuncios;
 
     @Nullable
     @Override
@@ -40,7 +39,8 @@ public class AnunciosAceptadosFragment extends Fragment {
     private void loadAnunciosAceptados() {
         new Thread(() -> {
             String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-            List<Anuncio> anuncios = db.anuncioDao().findAceptadosByUserEmail(userEmail);
+            long today = System.currentTimeMillis();
+            List<Anuncio> anuncios = db.anuncioDao().findAceptadosByUserEmail(userEmail, today);
             getActivity().runOnUiThread(() -> {
                 if (anuncios != null && !anuncios.isEmpty()) {
                     adapter = new AnuncioAdapter(getContext(), anuncios);

@@ -28,8 +28,6 @@ public class Clases extends Fragment {
 
     private ViewPager viewPager;
     private ClasesPagerAdapter pagerAdapter;
-    private AppDatabase db;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
     @Nullable
     @Override

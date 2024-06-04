@@ -60,8 +60,21 @@ public class AnuncioAdapter extends ArrayAdapter<Anuncio> {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         Date today = new Date();
         if (anuncio.fechaTutoria.before(today)) {
-            viewHolder.estado.setText("Anuncio Caducado");
-            convertView.setBackgroundColor(Color.parseColor("#FFCCCB")); // Rojo claro
+            if (!"Aceptado".equals(anuncio.estado)) {
+                // Eliminar el anuncio si no tiene estado "Aceptado"
+                new Thread(() -> {
+                    AppDatabase db = AppDatabase.getInstance(getContext());
+                    db.anuncioDao().delete(anuncio);
+                    db.reservaDao().deleteReservasByAnuncioIdIfNotReserved(anuncio.id);
+                    ((MainActivity) getContext()).runOnUiThread(() -> {
+                        remove(anuncio);
+                        notifyDataSetChanged();
+                    });
+                }).start();
+            } else {
+                viewHolder.estado.setText("Anuncio Caducado");
+                convertView.setBackgroundColor(Color.parseColor("#FFCCCB")); // Rojo claro
+            }
         } else {
             viewHolder.estado.setText("Anuncio pendiente de completarse");
             convertView.setBackgroundColor(Color.parseColor("#CCFFCC")); // Verde claro

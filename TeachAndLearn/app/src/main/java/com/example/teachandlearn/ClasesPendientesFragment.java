@@ -24,8 +24,6 @@ public class ClasesPendientesFragment extends Fragment {
     private ListView listViewClases;
     private AppDatabase db;
     private ClasesAdapter adapter;
-    private List<Anuncio> anuncios;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
     @Nullable
     @Override

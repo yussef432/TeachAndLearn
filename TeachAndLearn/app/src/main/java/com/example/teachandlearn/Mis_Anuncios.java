@@ -11,18 +11,23 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.List;
 
 public class Mis_Anuncios extends Fragment {
 
     private ListView listViewAnuncios;
     private FloatingActionButton fabAddAnuncio;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private AppDatabase db;
     private List<Anuncio> anuncios;
     private AnuncioAdapter adapter;
@@ -34,6 +39,7 @@ public class Mis_Anuncios extends Fragment {
 
         listViewAnuncios = view.findViewById(R.id.list_view_anuncios);
         fabAddAnuncio = view.findViewById(R.id.fab_add_anuncio);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
 
         db = AppDatabase.getInstance(getContext());
 
@@ -43,6 +49,8 @@ public class Mis_Anuncios extends Fragment {
             Intent intent = new Intent(getContext(), Crear_Anuncio.class);
             startActivity(intent);
         });
+
+        swipeRefreshLayout.setOnRefreshListener(() -> loadAnuncios());
 
         return view;
     }
@@ -58,6 +66,7 @@ public class Mis_Anuncios extends Fragment {
                 } else {
                     Toast.makeText(getContext(), "No se encontraron anuncios", Toast.LENGTH_SHORT).show();
                 }
+                swipeRefreshLayout.setRefreshing(false);
             });
         }).start();
     }

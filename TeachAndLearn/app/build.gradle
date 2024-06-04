@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.3.0'
     implementation 'androidx.room:room-runtime:2.6.1'
     implementation libs.recyclerview
+    implementation libs.swiperefreshlayout
     annotationProcessor 'androidx.room:room-compiler:2.6.1'
     implementation 'androidx.room:room-ktx:2.6.1'
     testImplementation 'junit:junit:4.13.2'

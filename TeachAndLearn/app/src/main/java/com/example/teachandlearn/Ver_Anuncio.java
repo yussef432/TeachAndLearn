@@ -150,6 +150,7 @@ public class Ver_Anuncio extends AppCompatActivity {
                                 anuncioDao.update(anuncio);
                                 runOnUiThread(() -> {
                                     Toast.makeText(this, "Reserva aceptada", Toast.LENGTH_SHORT).show();
+                                    finish();
                                 });
                             }).start();
                         });

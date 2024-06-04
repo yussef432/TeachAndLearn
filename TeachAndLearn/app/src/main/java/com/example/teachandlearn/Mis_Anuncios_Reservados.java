@@ -25,7 +25,6 @@ public class Mis_Anuncios_Reservados extends Fragment {
 
     private ViewPager viewPager;
     private AnunciosReservadosPagerAdapter pagerAdapter;
-    private AppDatabase db;
 
     @Nullable
     @Override

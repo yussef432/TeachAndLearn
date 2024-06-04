@@ -23,8 +23,6 @@ public class ClasesReservadasFragment extends Fragment {
     private ListView listViewClases;
     private AppDatabase db;
     private ClasesAdapter adapter;
-    private List<Anuncio> anuncios;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
     @Nullable
     @Override
@@ -43,7 +41,8 @@ public class ClasesReservadasFragment extends Fragment {
     private void loadClasesReservadas() {
         new Thread(() -> {
             String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-            List<Anuncio> anunciosReservados = db.anuncioDao().findAnunciosReservadosByUserEmail(userEmail);
+            long today = System.currentTimeMillis();
+            List<Anuncio> anunciosReservados = db.anuncioDao().findAnunciosReservadosByUserEmail(userEmail, today);
             List<Reserva> reservasReservadas = db.reservaDao().findReservadosByUserEmail(userEmail);
             getActivity().runOnUiThread(() -> {
                 if (anunciosReservados != null && !anunciosReservados.isEmpty()) {
