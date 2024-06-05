@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TeachAndLearn</string>
+    <string name="app_name">Teach&amp;Learn</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="contrasenia">Contraseña</string>
@@ -33,5 +33,7 @@
         <item>HorasDesc</item>
         <item>PrecioAsc</item>
         <item>PrecioDesc</item>
+        <item>FechaAsc</item>
+        <item>FechaDesc</item>
     </string-array>
 </resources>

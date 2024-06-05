@@ -33,8 +33,6 @@ public interface ReservaDao {
             Reserva reserva = new Reserva();
             reserva.setIdAnuncio(anuncioId);
             reserva.setIdUsuario(userEmail);
-            reserva.setRolUsuario(tipoAnuncio);
-            reserva.setFechaReserva(new Date().toString());
             reserva.setEstado("Pendiente");
             insert(reserva);
 
@@ -46,8 +44,7 @@ public interface ReservaDao {
         }
     }
     @Query("SELECT reserva.id AS id, reserva.id_anuncio AS idAnuncio, reserva.id_usuario " +
-            "AS idUsuario, reserva.rol_usuario AS rolUsuario, reserva.fecha_reserva " +
-            "AS fechaReserva, reserva.estado AS estado, usuario.nombre AS nombre," +
+            "AS idUsuario, reserva.estado AS estado, usuario.nombre AS nombre," +
             " usuario.apellidos AS apellidos, usuario.telefono AS telefono, " +
             "usuario.descripcion AS descripcion, usuario.foto_perfil AS fotoPerfil " +
             "FROM reserva JOIN usuario " +

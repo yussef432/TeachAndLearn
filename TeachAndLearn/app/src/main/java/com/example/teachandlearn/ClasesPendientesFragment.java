@@ -18,12 +18,14 @@ import org.jetbrains.annotations.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class ClasesPendientesFragment extends Fragment {
 
     private ListView listViewClases;
     private AppDatabase db;
     private ClasesAdapter adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -31,11 +33,11 @@ public class ClasesPendientesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_clases_pendientes, container, false);
 
         listViewClases = view.findViewById(R.id.list_view_clases_pendientes);
-
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         db = AppDatabase.getInstance(getContext());
 
         loadClasesPendientes();
-
+        swipeRefreshLayout.setOnRefreshListener(() -> loadClasesPendientes());
         return view;
     }
 
@@ -51,6 +53,7 @@ public class ClasesPendientesFragment extends Fragment {
                 } else {
                     Toast.makeText(getContext(), "No se encontraron clases pendientes", Toast.LENGTH_SHORT).show();
                 }
+                swipeRefreshLayout.setRefreshing(false);
             });
         }).start();
     }

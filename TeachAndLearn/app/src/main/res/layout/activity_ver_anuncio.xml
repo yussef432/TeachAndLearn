@@ -169,13 +169,18 @@
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+        <FrameLayout
+            android:id="@+id/profile_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:id="@+id/reservas_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"></LinearLayout>
+            android:visibility="gone" />
+
 
         <Button
             android:id="@+id/btn_ver_perfil_anunciante"

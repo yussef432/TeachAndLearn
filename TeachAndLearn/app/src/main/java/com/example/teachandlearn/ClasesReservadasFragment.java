@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -23,6 +24,7 @@ public class ClasesReservadasFragment extends Fragment {
     private ListView listViewClases;
     private AppDatabase db;
     private ClasesAdapter adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -30,9 +32,10 @@ public class ClasesReservadasFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_clases_reservadas, container, false);
 
         listViewClases = view.findViewById(R.id.list_view_clases_reservadas);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
 
         db = AppDatabase.getInstance(getContext());
-
+        swipeRefreshLayout.setOnRefreshListener(() -> loadClasesReservadas());
         loadClasesReservadas();
 
         return view;
@@ -51,6 +54,7 @@ public class ClasesReservadasFragment extends Fragment {
                 } else {
                     Toast.makeText(getContext(), "No se encontraron clases reservadas", Toast.LENGTH_SHORT).show();
                 }
+                swipeRefreshLayout.setRefreshing(false);
             });
         }).start();
     }

@@ -19,22 +19,28 @@ public interface AnuncioDao {
     Anuncio findById(int anuncioId);
 
     @Query("SELECT * FROM anuncio WHERE tipo_anuncio = :tipo AND id_usuario != :userEmail " +
+            "AND estado != 'Aceptado' " +
             "AND fecha_tutoria >= :today " +
             "AND id NOT IN (SELECT id_anuncio FROM reserva WHERE id_usuario = :userEmail) ORDER BY " +
             "CASE WHEN :filter = 'HorasAsc' THEN horas END ASC, " +
             "CASE WHEN :filter = 'HorasDesc' THEN horas END DESC, " +
             "CASE WHEN :filter = 'PrecioAsc' THEN precio_por_hora END ASC, " +
-            "CASE WHEN :filter = 'PrecioDesc' THEN precio_por_hora END DESC")
+            "CASE WHEN :filter = 'PrecioDesc' THEN precio_por_hora END DESC, " +
+            "CASE WHEN :filter = 'FechaAsc' THEN fecha_tutoria END ASC, " +
+            "CASE WHEN :filter = 'FechaDesc' THEN fecha_tutoria END DESC")
     List<Anuncio> findAnunciosByTypeAndNotUser(String tipo, String userEmail, String filter, long today);
 
     @Query("SELECT * FROM anuncio WHERE tipo_anuncio = :tipo AND id_usuario != :userEmail " +
+            "AND estado != 'Aceptado'" +
             "AND fecha_tutoria >= :today AND id NOT IN (SELECT id_anuncio FROM reserva " +
             "WHERE id_usuario = :userEmail) AND " +
             "(titulo LIKE :query OR descripcion LIKE :query) ORDER BY " +
             "CASE WHEN :filter = 'HorasAsc' THEN horas END ASC, " +
             "CASE WHEN :filter = 'HorasDesc' THEN horas END DESC, " +
             "CASE WHEN :filter = 'PrecioAsc' THEN precio_por_hora END ASC, " +
-            "CASE WHEN :filter = 'PrecioDesc' THEN precio_por_hora END DESC")
+            "CASE WHEN :filter = 'PrecioDesc' THEN precio_por_hora END DESC, " +
+            "CASE WHEN :filter = 'FechaAsc' THEN fecha_tutoria END ASC, " +
+            "CASE WHEN :filter = 'FechaDesc' THEN fecha_tutoria END DESC")
     List<Anuncio> searchAnuncios(String tipo, String userEmail, String query, String filter, long today);
     @Query("SELECT * FROM anuncio WHERE id_usuario = :userEmail AND estado = 'Aceptado'")
     List<Anuncio> findAcceptedByUserEmail(String userEmail);
@@ -46,8 +52,7 @@ public interface AnuncioDao {
     void delete(Anuncio anuncio);
 
 
-    @Query("SELECT * FROM anuncio WHERE id IN (SELECT id_anuncio FROM reserva WHERE id_usuario = :userEmail)")
-    List<Anuncio> findAnunciosReservadosByUsuario(String userEmail);
+
     @Query("SELECT EXISTS(SELECT 1 FROM reserva WHERE id_anuncio = :anuncioId AND id_usuario = :userEmail)")
     boolean isAnuncioReservedByUser(int anuncioId, String userEmail);
     @Query("SELECT EXISTS(SELECT 1 FROM anuncio WHERE id = :anuncioId AND estado = 'Aceptado')")

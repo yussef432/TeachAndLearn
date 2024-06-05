@@ -28,6 +28,7 @@ public class Calendario extends Fragment {
     private CalendarView calendarView;
     private TextView tvMessage;
     private TextView tvDates;
+
     private RecyclerView rvEventos;
     private EventoAdapter eventoAdapter;
     private List<Evento> eventosList = new ArrayList<>();
@@ -57,9 +58,11 @@ public class Calendario extends Fragment {
 
         cargarEventos();
 
+
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             String dateString = String.format(Locale.getDefault(), "%02d/%02d/%04d", dayOfMonth, month + 1, year);
             mostrarEventosDelDia(dateString);
+
         });
 
         return view;
@@ -99,9 +102,15 @@ public class Calendario extends Fragment {
             fechas.sort(String::compareTo);
 
             requireActivity().runOnUiThread(() -> {
+
                 eventosList.clear();
                 eventosList.addAll(eventosTempList);
                 tvDates.setText(fechas.toString().replace("[", "").replace("]", ""));
+                if (eventosList.isEmpty()) {
+                    tvMessage.setText("No tienes clases");
+                } else {
+                    tvMessage.setText("Tienes clases estos días:");
+                }
                 eventoAdapter.notifyDataSetChanged();
             });
         });
@@ -120,6 +129,7 @@ public class Calendario extends Fragment {
             }
 
             requireActivity().runOnUiThread(() -> {
+
                 eventoAdapter = new EventoAdapter(eventosDelDia);
                 rvEventos.setAdapter(eventoAdapter);
             });

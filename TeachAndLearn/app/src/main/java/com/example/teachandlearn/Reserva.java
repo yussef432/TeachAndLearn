@@ -31,12 +31,6 @@ public class Reserva {
     @ColumnInfo(name = "id_usuario")
     public String idUsuario; // Cambiado el tipo a String
 
-    @ColumnInfo(name = "rol_usuario")
-    public String rolUsuario;
-
-    @ColumnInfo(name = "fecha_reserva")
-    public String fechaReserva; // Puedes usar el tipo Date con TypeConverters
-
     @ColumnInfo(name = "estado") // Agregar este campo
     public String estado;
 
@@ -61,15 +55,6 @@ public class Reserva {
         this.idUsuario = idUsuario;
     }
 
-
-    public void setRolUsuario(String rolUsuario) {
-        this.rolUsuario = rolUsuario;
-    }
-
-
-    public void setFechaReserva(String fechaReserva) {
-        this.fechaReserva = fechaReserva;
-    }
 
     public String getEstado() {
         return estado;

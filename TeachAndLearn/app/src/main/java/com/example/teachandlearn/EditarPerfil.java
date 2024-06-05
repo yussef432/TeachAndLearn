@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -65,7 +66,9 @@ public class EditarPerfil extends AppCompatActivity {
                     editTextApellidos.setText(usuario.apellidos);
                     editTextTelefono.setText(usuario.telefono);
                     editTextDescripcion.setText(usuario.descripcion);
-                    if (!usuario.fotoPerfil.isEmpty()) {
+
+                    if (usuario.fotoPerfil != null && !usuario.fotoPerfil.isEmpty()) {
+                        Log.d("EditarPerfil", "Loading image URL: " + usuario.fotoPerfil);
                         Glide.with(this).load(usuario.fotoPerfil).into(imageViewEditarFotoPerfil);
                     }
                 });
@@ -88,7 +91,9 @@ public class EditarPerfil extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 imageViewEditarFotoPerfil.setImageBitmap(bitmap);
-                usuario.fotoPerfil = uri.toString();
+                usuario.fotoPerfil = uri.toString(); // Update the photo URL
+                Log.d("EditarPerfil", "Selected image URL: " + usuario.fotoPerfil);
+                Glide.with(this).load(uri).into(imageViewEditarFotoPerfil);
             } catch (IOException e) {
                 e.printStackTrace();
             }

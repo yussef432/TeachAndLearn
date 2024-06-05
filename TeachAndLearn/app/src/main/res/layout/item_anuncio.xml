@@ -5,26 +5,94 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <TextView
-        android:id="@+id/titulo_anuncio"
+    <!-- Contenedor horizontal para el título y la fecha -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:paddingBottom="4dp" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/horas_anuncio"
+        <!-- Título del anuncio -->
+        <TextView
+            android:id="@+id/titulo_anuncio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingBottom="4dp" />
+
+        <!-- Fecha del anuncio -->
+        <TextView
+            android:id="@+id/fecha_anuncio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha: "
+            android:textSize="14sp"
+            android:layout_gravity="end"
+            android:paddingStart="8dp"
+            android:paddingBottom="4dp" />
+    </LinearLayout>
+
+    <!-- Contenedor horizontal para horas y precio -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/precio_anuncio"
+        <!-- Horas del anuncio con etiqueta -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Horas: "
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/horas_anuncio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Precio del anuncio con etiqueta -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp" />
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Precio: "
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/precio_anuncio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tipo: "
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tipo_anuncio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Estado del anuncio -->
     <TextView
         android:id="@+id/estado_anuncio"
         android:layout_width="match_parent"
@@ -33,6 +101,7 @@
         android:paddingTop="4dp"
         android:paddingBottom="4dp" />
 
+    <!-- Botones de editar y eliminar anuncio -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

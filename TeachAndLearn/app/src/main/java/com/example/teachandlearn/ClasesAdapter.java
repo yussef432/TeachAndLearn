@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -72,7 +73,9 @@ public class ClasesAdapter extends ArrayAdapter<Anuncio> {
                         db.reservaDao().delete(reserva);
                         ((MainActivity) getContext()).runOnUiThread(() -> {
                             reservas.remove(reserva);
+                            remove(clase);
                             notifyDataSetChanged();
+                            Toast.makeText(getContext(), "Petición de reserva eliminada correctamente", Toast.LENGTH_SHORT).show();
                         });
                     }
                 }).start();

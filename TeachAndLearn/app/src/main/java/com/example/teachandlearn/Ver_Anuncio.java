@@ -1,5 +1,6 @@
 package com.example.teachandlearn;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -132,11 +133,12 @@ public class Ver_Anuncio extends AppCompatActivity {
                             perfilFragment.setArguments(args);
 
                             fragmentManager.beginTransaction()
-                                    .replace(R.id.reservas_layout, perfilFragment, "perfilFragment")
+                                    .replace(R.id.profile_container, perfilFragment, "perfilFragment")
                                     .addToBackStack(null)
                                     .commit();
                         }
                     });
+
 
                     if (anuncioAceptado && "Reservado".equals(reserva.estado)) {
                         aceptarReserva.setVisibility(View.GONE);
@@ -150,6 +152,8 @@ public class Ver_Anuncio extends AppCompatActivity {
                                 anuncioDao.update(anuncio);
                                 runOnUiThread(() -> {
                                     Toast.makeText(this, "Reserva aceptada", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(intent);
                                     finish();
                                 });
                             }).start();
@@ -183,6 +187,8 @@ public class Ver_Anuncio extends AppCompatActivity {
 
             runOnUiThread(() -> {
                 Toast.makeText(Ver_Anuncio.this, "Peticion de reserva enviada con éxito", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
                 finish();
             });
         }).start();

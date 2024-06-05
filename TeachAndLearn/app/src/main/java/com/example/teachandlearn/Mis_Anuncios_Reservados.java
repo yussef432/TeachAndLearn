@@ -53,11 +53,11 @@ public class Mis_Anuncios_Reservados extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new AnunciosPendientesFragment();
-                case 1:
-                    return new AnunciosAceptadosFragment();
-                case 2:
                     return new Mis_Anuncios();
+                case 1:
+                    return new AnunciosPendientesFragment();
+                case 2:
+                    return new AnunciosAceptadosFragment();
                 default:
                     return null;
             }
@@ -73,11 +73,11 @@ public class Mis_Anuncios_Reservados extends Fragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Pendientes de Aceptar";
+                    return "Mis Anuncios";
                 case 1:
-                    return "Aceptados";
+                    return "Pendientes de Aceptar";
                 case 2:
-                    return "Sin reservas";
+                    return "Aceptados";
                 default:
                     return null;
             }

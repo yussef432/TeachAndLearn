@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ public class ClasesRechazadasFragment extends Fragment {
     private ListView listViewClases;
     private AppDatabase db;
     private ClasesAdapter adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -32,8 +34,10 @@ public class ClasesRechazadasFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_clases_rechazadas, container, false);
 
         listViewClases = view.findViewById(R.id.list_view_clases_rechazadas);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
 
         db = AppDatabase.getInstance(getContext());
+        swipeRefreshLayout.setOnRefreshListener(() -> loadClasesRechazadas());
 
         loadClasesRechazadas();
 
@@ -53,6 +57,7 @@ public class ClasesRechazadasFragment extends Fragment {
                 } else {
                     Toast.makeText(getContext(), "No se encontraron clases rechazadas", Toast.LENGTH_SHORT).show();
                 }
+                swipeRefreshLayout.setRefreshing(false);
             });
         }).start();
     }
