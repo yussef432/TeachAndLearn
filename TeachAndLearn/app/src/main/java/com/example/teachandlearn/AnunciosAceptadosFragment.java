@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +26,9 @@ public class AnunciosAceptadosFragment extends Fragment {
     private AppDatabase db;
     private AnuncioAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private Spinner spinnerFilter;
+    private String selectedFilter = "Todos";
+    private TextView textViewNoAnuncios;
 
     @Nullable
     @Override
@@ -31,14 +37,28 @@ public class AnunciosAceptadosFragment extends Fragment {
 
         listViewAnuncios = view.findViewById(R.id.list_view_anuncios_aceptados);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
+        spinnerFilter = view.findViewById(R.id.spinner_filter);
+        textViewNoAnuncios = view.findViewById(R.id.text_view_no_anuncios);
+
 
         db = AppDatabase.getInstance(getContext());
 
         loadAnunciosAceptados();
 
-
         swipeRefreshLayout.setOnRefreshListener(() -> loadAnunciosAceptados());
 
+        spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedFilter = parent.getItemAtPosition(position).toString();
+                loadAnunciosAceptados();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
 
         return view;
     }
@@ -47,13 +67,19 @@ public class AnunciosAceptadosFragment extends Fragment {
         new Thread(() -> {
             String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             long today = System.currentTimeMillis();
-            List<Anuncio> anuncios = db.anuncioDao().findAceptadosByUserEmail(userEmail, today);
+            List<Anuncio> anuncios;
+            if (selectedFilter.equals("Todos")) {
+                anuncios = db.anuncioDao().findAceptadosByUserEmail(userEmail, today);
+            } else {
+                anuncios = db.anuncioDao().findAceptadosByUserEmailAndType(userEmail, selectedFilter, today);
+            }
             getActivity().runOnUiThread(() -> {
                 if (anuncios != null && !anuncios.isEmpty()) {
                     adapter = new AnuncioAdapter(getContext(), anuncios);
                     listViewAnuncios.setAdapter(adapter);
+                    textViewNoAnuncios.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(getContext(), "No se encontraron anuncios aceptados", Toast.LENGTH_SHORT).show();
+                    textViewNoAnuncios.setVisibility(View.VISIBLE);
                 }
                 swipeRefreshLayout.setRefreshing(false);
             });

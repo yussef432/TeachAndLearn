@@ -51,6 +51,11 @@ public interface AnuncioDao {
     @Delete
     void delete(Anuncio anuncio);
 
+    @Query("SELECT * FROM anuncio WHERE (estado = 'Reservado' OR estado = 'Aceptado') AND id IN " +
+            "(SELECT id_anuncio FROM reserva WHERE id_usuario = :userEmail AND estado = 'Reservado') " +
+            "AND fecha_tutoria >= :today AND tipo_anuncio = :tipo ORDER BY CASE " +
+            "WHEN fecha_tutoria >= :today THEN 0 ELSE 1 END, fecha_tutoria asc")
+    List<Anuncio> findAnunciosReservadosByUserEmailAndType(String userEmail, String tipo, long today);
 
 
     @Query("SELECT EXISTS(SELECT 1 FROM reserva WHERE id_anuncio = :anuncioId AND id_usuario = :userEmail)")
@@ -84,6 +89,10 @@ public interface AnuncioDao {
             "WHEN fecha_tutoria >= :today THEN 0 ELSE 1 END, fecha_tutoria asc")
     List<Anuncio> findAnunciosReservadosByUserEmail(String userEmail, long today);
 
+    @Query("SELECT * FROM anuncio WHERE id_usuario = :userEmail AND estado = 'Aceptado' " +
+            "AND tipo_anuncio = :tipo " +
+            "ORDER BY CASE WHEN fecha_tutoria >= :today THEN 0 ELSE 1 END, fecha_tutoria DESC")
+    List<Anuncio> findAceptadosByUserEmailAndType(String userEmail, String tipo, long today);
 
 
 }

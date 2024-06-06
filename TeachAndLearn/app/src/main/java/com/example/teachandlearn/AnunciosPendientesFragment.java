@@ -16,13 +16,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-
+import android.widget.TextView;
 public class AnunciosPendientesFragment extends Fragment {
 
     private ListView listViewAnuncios;
     private AppDatabase db;
     private AnuncioAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView textViewNoAnuncios;
 
     @Nullable
     @Override
@@ -32,6 +33,7 @@ public class AnunciosPendientesFragment extends Fragment {
         listViewAnuncios = view.findViewById(R.id.list_view_anuncios_pendientes);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         db = AppDatabase.getInstance(getContext());
+        textViewNoAnuncios = view.findViewById(R.id.text_view_no_anuncios);
 
         loadAnunciosPendientes();
         swipeRefreshLayout.setOnRefreshListener(() -> loadAnunciosPendientes());
@@ -47,8 +49,9 @@ public class AnunciosPendientesFragment extends Fragment {
                 if (anuncios != null && !anuncios.isEmpty()) {
                     adapter = new AnuncioAdapter(getContext(), anuncios);
                     listViewAnuncios.setAdapter(adapter);
+                    textViewNoAnuncios.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(getContext(), "No se encontraron anuncios pendientes", Toast.LENGTH_SHORT).show();
+                    textViewNoAnuncios.setVisibility(View.VISIBLE);
                 }
                 swipeRefreshLayout.setRefreshing(false);
             });

@@ -20,13 +20,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
+import android.widget.TextView;
 public class ClasesRechazadasFragment extends Fragment {
 
     private ListView listViewClases;
     private AppDatabase db;
     private ClasesAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView textViewNoAnuncios;
 
     @Nullable
     @Override
@@ -35,6 +36,7 @@ public class ClasesRechazadasFragment extends Fragment {
 
         listViewClases = view.findViewById(R.id.list_view_clases_rechazadas);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
+        textViewNoAnuncios = view.findViewById(R.id.text_view_no_anuncios);
 
         db = AppDatabase.getInstance(getContext());
         swipeRefreshLayout.setOnRefreshListener(() -> loadClasesRechazadas());
@@ -54,8 +56,9 @@ public class ClasesRechazadasFragment extends Fragment {
                 if (anunciosRechazados != null && !anunciosRechazados.isEmpty()) {
                     adapter = new ClasesAdapter(getContext(), anunciosRechazados, reservasRechazadas);
                     listViewClases.setAdapter(adapter);
+                    textViewNoAnuncios.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(getContext(), "No se encontraron clases rechazadas", Toast.LENGTH_SHORT).show();
+                    textViewNoAnuncios.setVisibility(View.VISIBLE);
                 }
                 swipeRefreshLayout.setRefreshing(false);
             });

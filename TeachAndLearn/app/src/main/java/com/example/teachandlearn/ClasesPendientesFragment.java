@@ -19,13 +19,14 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
+import android.widget.TextView;
 public class ClasesPendientesFragment extends Fragment {
 
     private ListView listViewClases;
     private AppDatabase db;
     private ClasesAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView textViewNoAnuncios;
 
     @Nullable
     @Override
@@ -35,6 +36,7 @@ public class ClasesPendientesFragment extends Fragment {
         listViewClases = view.findViewById(R.id.list_view_clases_pendientes);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         db = AppDatabase.getInstance(getContext());
+        textViewNoAnuncios = view.findViewById(R.id.text_view_no_anuncios);
 
         loadClasesPendientes();
         swipeRefreshLayout.setOnRefreshListener(() -> loadClasesPendientes());
@@ -50,8 +52,9 @@ public class ClasesPendientesFragment extends Fragment {
                 if (anunciosPendientes != null && !anunciosPendientes.isEmpty()) {
                     adapter = new ClasesAdapter(getContext(), anunciosPendientes, reservasPendientes);
                     listViewClases.setAdapter(adapter);
+                    textViewNoAnuncios.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(getContext(), "No se encontraron clases pendientes", Toast.LENGTH_SHORT).show();
+                    textViewNoAnuncios.setVisibility(View.VISIBLE);
                 }
                 swipeRefreshLayout.setRefreshing(false);
             });

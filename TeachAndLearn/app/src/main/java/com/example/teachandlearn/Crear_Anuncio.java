@@ -211,7 +211,7 @@ public class Crear_Anuncio extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "Error al guardar el anuncio. Debe rellenar todos los campos correctamente. Código del error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error al guardar el anuncio. Debe rellenar todos los campos correctamente.", Toast.LENGTH_LONG).show();
         }
     }
 

@@ -31,6 +31,7 @@ public class Mis_Anuncios extends Fragment {
     private AppDatabase db;
     private List<Anuncio> anuncios;
     private AnuncioAdapter adapter;
+    private TextView textViewNoAnuncios;
 
     @Nullable
     @Override
@@ -40,6 +41,7 @@ public class Mis_Anuncios extends Fragment {
         listViewAnuncios = view.findViewById(R.id.list_view_anuncios);
         fabAddAnuncio = view.findViewById(R.id.fab_add_anuncio);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
+        textViewNoAnuncios = view.findViewById(R.id.text_view_no_anuncios);
 
         db = AppDatabase.getInstance(getContext());
 
@@ -63,8 +65,9 @@ public class Mis_Anuncios extends Fragment {
                 if (anuncios != null && !anuncios.isEmpty()) {
                     adapter = new AnuncioAdapter(getContext(), anuncios);
                     listViewAnuncios.setAdapter(adapter);
+                    textViewNoAnuncios.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(getContext(), "No se encontraron anuncios", Toast.LENGTH_SHORT).show();
+                    textViewNoAnuncios.setVisibility(View.VISIBLE);
                 }
                 swipeRefreshLayout.setRefreshing(false);
             });

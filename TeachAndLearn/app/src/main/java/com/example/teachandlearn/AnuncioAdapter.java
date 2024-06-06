@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -117,6 +118,7 @@ public class AnuncioAdapter extends ArrayAdapter<Anuncio> {
                 ((MainActivity) getContext()).runOnUiThread(() -> {
                     remove(anuncio);
                     notifyDataSetChanged();
+                    Toast.makeText(this.getContext(), "Anuncio eliminado", Toast.LENGTH_LONG).show();
                 });
             }).start();
         });

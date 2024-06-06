@@ -36,4 +36,10 @@
         <item>FechaAsc</item>
         <item>FechaDesc</item>
     </string-array>
+
+    <string-array name="filtro_tipo">
+        <item>Todos</item>
+        <item>Alumno</item>
+        <item>Profesor</item>
+    </string-array>
 </resources>
