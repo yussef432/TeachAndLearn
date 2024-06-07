@@ -11,17 +11,12 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-public class Mis_Anuncios_Reservados extends Fragment {
+public class Todos_Mis_Anuncios extends Fragment {
 
     private ViewPager viewPager;
     private AnunciosReservadosPagerAdapter pagerAdapter;

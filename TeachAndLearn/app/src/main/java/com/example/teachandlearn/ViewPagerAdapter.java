@@ -17,7 +17,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 0: return new Perfil();
             case 1: return new Clases();
             case 2: return new Calendario();
-            case 3: return new Mis_Anuncios_Reservados();
+            case 3: return new Todos_Mis_Anuncios();
             default: return new Perfil();
         }
     }

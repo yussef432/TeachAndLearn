@@ -103,7 +103,7 @@ public class Anuncios_Alumnos extends Fragment {
                     adapter = new AnuncioAdapter(getContext(), anuncios);
                     listViewAnuncios.setAdapter(adapter);
                 } else {
-                    listViewAnuncios.setAdapter(null); // Clear the list view when no results
+                    listViewAnuncios.setAdapter(null);
                 }
             });
         }).start();

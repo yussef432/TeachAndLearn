@@ -55,7 +55,7 @@ public class Ver_Anuncio extends AppCompatActivity {
             finish();
         }
 
-        btnVerPerfilAnunciante.setOnClickListener(v -> togglePerfilAnuncianteCard());
+        btnVerPerfilAnunciante.setOnClickListener(v -> mostrarPerfilAnuncianteCard());
     }
 
     private void loadAnuncio() {
@@ -193,7 +193,7 @@ public class Ver_Anuncio extends AppCompatActivity {
             });
         }).start();
     }
-    private void togglePerfilAnuncianteCard() {
+    private void mostrarPerfilAnuncianteCard() {
         View cardViewAnunciante = findViewById(R.id.cardview_anunciante);
         if (cardViewAnunciante.getVisibility() == View.VISIBLE) {
             cardViewAnunciante.setVisibility(View.GONE);

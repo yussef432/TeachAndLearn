@@ -101,7 +101,7 @@ public class Anuncios_Profesores extends Fragment {
                     adapter = new AnuncioAdapter(getContext(), anuncios);
                     listViewAnunciosProfesores.setAdapter(adapter);
                 } else {
-                    listViewAnunciosProfesores.setAdapter(null); // Clear the list view when no results
+                    listViewAnunciosProfesores.setAdapter(null);
                 }
             });
         }).start();
