@@ -49,7 +49,7 @@ public class ClasesAdapter extends ArrayAdapter<Anuncio> {
         Button btnCancelarPeticion = view.findViewById(R.id.btn_cancelar_peticion);
 
         titulo.setText(clase.getTitulo());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         fecha.setText(dateFormat.format(clase.getFechaTutoria()));
 
         String estadoReserva = getEstadoReserva(clase.getId());

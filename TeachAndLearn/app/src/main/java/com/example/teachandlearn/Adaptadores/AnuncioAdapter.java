@@ -101,14 +101,26 @@ public class AnuncioAdapter extends ArrayAdapter<Anuncio> {
             e.printStackTrace();
         }
 
-        // Mostrar/ocultar botones según el estado del anuncio
-        if ("".equals(anuncio.estado) && userEmail.equals(anuncio.idUsuario)) {
-            viewHolder.editar.setVisibility(View.VISIBLE);
-            viewHolder.eliminar.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.editar.setVisibility(View.GONE);
-            viewHolder.eliminar.setVisibility(View.GONE);
-        }
+        // Verificar y actualizar el estado del anuncio si está pendiente y no tiene reservas
+        new Thread(() -> {
+            AppDatabase db = AppDatabase.getInstance(getContext());
+            if ("Pendiente".equals(anuncio.getEstado()) && db.reservaDao().countReservasByAnuncioId(anuncio.id) == 0) {
+                anuncio.setEstado("");
+                db.anuncioDao().update(anuncio);
+            }
+            ((MainActivity) getContext()).runOnUiThread(() -> {
+                if ("".equals(anuncio.estado) && userEmail.equals(anuncio.idUsuario)) {
+                    viewHolder.editar.setVisibility(View.VISIBLE);
+                    viewHolder.eliminar.setVisibility(View.VISIBLE);
+                } else if ("Pendiente".equals(anuncio.estado) && userEmail.equals(anuncio.idUsuario)) {
+                    viewHolder.editar.setVisibility(View.GONE);
+                    viewHolder.eliminar.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolder.editar.setVisibility(View.GONE);
+                    viewHolder.eliminar.setVisibility(View.GONE);
+                }
+            });
+        }).start();
 
         viewHolder.editar.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), Crear_Anuncio.class);

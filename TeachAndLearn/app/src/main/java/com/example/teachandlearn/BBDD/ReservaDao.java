@@ -58,4 +58,6 @@ public interface ReservaDao {
 
     @Query("DELETE FROM reserva WHERE id_anuncio = :anuncioId AND estado != 'Reservado'")
     void deleteReservasByAnuncioIdIfNotReserved(int anuncioId);
+    @Query("SELECT COUNT(*) FROM reserva WHERE id_anuncio = :anuncioId")
+    int countReservasByAnuncioId(int anuncioId);
 }

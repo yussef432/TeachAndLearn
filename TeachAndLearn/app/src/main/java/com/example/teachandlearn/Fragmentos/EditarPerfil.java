@@ -106,10 +106,25 @@ public class EditarPerfil extends AppCompatActivity {
     }
 
     public void onClickGuardarPerfil(View view) {
-        usuario.nombre = editTextNombre.getText().toString();
-        usuario.apellidos = editTextApellidos.getText().toString();
-        usuario.telefono = editTextTelefono.getText().toString();
-        usuario.descripcion = editTextDescripcion.getText().toString();
+        String nombre = editTextNombre.getText().toString();
+        String apellidos = editTextApellidos.getText().toString();
+        String telefono = editTextTelefono.getText().toString();
+        String descripcion = editTextDescripcion.getText().toString();
+
+        if (nombre.isEmpty() || apellidos.isEmpty() || telefono.isEmpty() || descripcion.isEmpty()) {
+            Toast.makeText(this, "Todos los campos deben estar rellenados", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (telefono.length() < 9) {
+            Toast.makeText(this, "El número de teléfono debe tener al menos 9 dígitos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        usuario.nombre = nombre;
+        usuario.apellidos = apellidos;
+        usuario.telefono = telefono;
+        usuario.descripcion = descripcion;
 
         new Thread(() -> {
             db.usuarioDao().update(usuario);

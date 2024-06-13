@@ -141,7 +141,6 @@
             android:id="@+id/descripcion_usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:text="@string/descripcion"
             android:textSize="18sp"
             android:textColor="@color/black"

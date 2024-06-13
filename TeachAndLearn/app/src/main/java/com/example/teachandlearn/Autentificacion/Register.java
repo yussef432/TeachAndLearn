@@ -3,6 +3,7 @@ package com.example.teachandlearn.Autentificacion;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -82,43 +83,35 @@ public class Register extends AppCompatActivity {
                 telefono = String.valueOf(editTextTelefono.getText());
                 descripcion = String.valueOf(editTextDescripcion.getText());
 
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(Register.this, "Ingrese Email", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(email) || TextUtils.isEmpty(contrasenia) || TextUtils.isEmpty(confirmarContrasenia) ||
+                        TextUtils.isEmpty(nombre) || TextUtils.isEmpty(apellidos) || TextUtils.isEmpty(telefono) ||
+                        TextUtils.isEmpty(descripcion)) {
+                    Toast.makeText(Register.this, "Todos los campos deben estar rellenados", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
-                if (TextUtils.isEmpty(contrasenia)) {
-                    Toast.makeText(Register.this, "Ingrese Contraseña", Toast.LENGTH_SHORT).show();
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    Toast.makeText(Register.this, "El email debe tener un formato válido (ej. usuario@dominio.com)", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
-                if (TextUtils.isEmpty(confirmarContrasenia)) {
-                    Toast.makeText(Register.this, "Confirme su Contraseña", Toast.LENGTH_SHORT).show();
+                if (contrasenia.length() < 6) {
+                    Toast.makeText(Register.this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
                 if (!contrasenia.equals(confirmarContrasenia)) {
-                    Toast.makeText(Register.this, "Las Contraseñas no Coinciden", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
-                if (TextUtils.isEmpty(nombre)) {
-                    Toast.makeText(Register.this, "Ingrese Nombre", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(apellidos)) {
-                    Toast.makeText(Register.this, "Ingrese Apellidos", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(telefono)) {
-                    Toast.makeText(Register.this, "Ingrese Teléfono", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(descripcion)) {
-                    Toast.makeText(Register.this, "Ingrese Descripción", Toast.LENGTH_SHORT).show();
+                if (telefono.length() < 9) {
+                    Toast.makeText(Register.this, "El número de teléfono debe tener al menos 9 dígitos", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
@@ -147,7 +140,7 @@ public class Register extends AppCompatActivity {
                                         });
                                     }).start();
                                 } else {
-                                    Toast.makeText(Register.this, "Autenticación fallida.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Register.this, "Autenticación fallida compruebe si el email ya existe.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
